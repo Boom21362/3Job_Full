@@ -101,3 +101,6 @@ app.post('/api/v1/test-email', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+
+module.exports = app;
+app.set('trust proxy', 1);
