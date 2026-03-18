@@ -25,7 +25,9 @@ export const authOptions:AuthOptions = {
       }
     }
   })
-    ],
+    ],pages: {
+    signIn: '/auth/signin',
+  },
     session:{ strategy: "jwt"},
     callbacks:{
       async jwt({token,user}){
@@ -38,4 +40,4 @@ export const authOptions:AuthOptions = {
     }
 }
 const handler = NextAuth(authOptions)
-export {handler as GET,handler as POST}
+export {handler as  GET,handler as POST}
