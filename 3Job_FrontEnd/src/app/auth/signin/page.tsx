@@ -18,7 +18,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="flex flex-row w-full min-h-screen items-center justify-center bg-gradient-to-br from-[#0062AD] via-[#004a82] to-[#002d54] gap-0">
+    <div className="flex flex-row w-full min-h-screen items-center justify-center bg-gradient-to-br from-[#0062AD] via-[#004a82] to-[#002d54]">
       
       <div className="px-5">
         <Box
@@ -32,6 +32,7 @@ export default function SignInPage() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            overflow:'hidden',
             p: 4,
             boxShadow: 2
           }}
@@ -51,7 +52,7 @@ export default function SignInPage() {
             Login
           </Button>
           <div className="text-sm mt-10">
-            Don't have account? <Link href='/register' className="text-[#004a82]">Register Here!</Link>
+            Don't have account? <Link href='/auth/register' className="!text-[#004a82]">Register Here!</Link>
           </div>
         </Box>
       </div>
@@ -63,7 +64,7 @@ export default function SignInPage() {
             height: 550,
             borderRadius: 2,
             overflow: 'hidden',
-            display: 'flex',
+             display: { xs: 'none', md: 'block' },
             alignItems: 'center',
             boxShadow: 4,
             bgcolor:'#F5F5DC'

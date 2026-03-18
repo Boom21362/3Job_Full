@@ -31,8 +31,13 @@ export function EyeCard() {
         
         {/* The Text Legend */}
         <div className="text-black font-sans">
-          <h1 className="text-5xl font-bold leading-tight">3Job.</h1>
-          <p className="text-xl font-medium">Book Interviews with your favorite companies 
+          <img
+    src="/img/3joblogo.png"
+    width={150}
+    height={150}
+    alt="3Job logo"
+  />
+          <p className="text-xl font-medium p-2">Book Interviews with your favorite companies 
             <div className="text-2xl font-bold">TODAY!</div></p>
         </div>
       </div>
