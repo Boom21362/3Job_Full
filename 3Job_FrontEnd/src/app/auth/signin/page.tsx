@@ -4,7 +4,6 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import Image from "next/image";
 import EyeBanner from "@/components/signInPage/EyeBanner";
 import Link from "next/link";
-import TopMenuItem from "@/components/TopMenuItem";
 
 export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -13,9 +12,12 @@ export default function SignInPage() {
     await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
+      redirect: false,
       callbackUrl: "/", 
     });
   }
+
+    
 
   return (
     <div className="flex flex-row w-full min-h-screen items-center justify-center bg-gradient-to-br from-[#0062AD] via-[#004a82] to-[#002d54]">

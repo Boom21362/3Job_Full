@@ -23,13 +23,13 @@ export default async function TopMenu(){
                 <TopMenuItem title='Register' pageref='/auth/register'/>
                 </div>
             {
-                session? <Link href="/api/auth/signout">
+                session? <Link href="/auth/signout">
                     <div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
                         Sign-Out of {session.user?.name}
                     </div>
                 </Link>
                 :
-                <Link href="/api/auth/signin">
+                <Link href="/auth/signin">
                     <div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
                         Sign-In
                     </div>
