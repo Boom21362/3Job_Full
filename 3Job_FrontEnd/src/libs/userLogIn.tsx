@@ -2,7 +2,7 @@ import { resolve } from "path"
 
 export default async function userLogin(userEmail:string,userPassword:string) {
     
-    const response = await fetch("http://localhost:5000/api/v1/auth/login",{
+    const response = await fetch("https://3-job-back-end.vercel.app/api/v1/auth/login",{
         method: "POST",
         headers:{
             "Content-Type": "application/json"

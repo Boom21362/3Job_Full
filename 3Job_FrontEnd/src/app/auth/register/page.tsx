@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerAction } from "@/libs/register"; // Your fetcher
+import { register } from "@/libs/register"; // Your fetcher
 import EyeBanner from "@/components/signInPage/EyeBanner";
 import { Box, TextField, Button, Typography, Alert, CircularProgress } from "@mui/material";
 import Image from "next/image";
@@ -23,7 +23,7 @@ export default function RegisterPage() {
     const userData = Object.fromEntries(formData.entries());
 
     try {
-      await registerAction(userData as any); 
+      await register(userData as any); 
       router.push("/auth/signin"); // Send them to the login eyes!
     } catch (err: any) {
       setError(err.message || "Email already registered or Server Error");
@@ -69,12 +69,12 @@ export default function RegisterPage() {
           variant="contained" 
           disabled={isLoading}
           fullWidth 
-          sx={{ mt: 3, py: 1.5, bgcolor: '#0062AD' }}
+          sx={{ mt: 3, py: 1.5, bgcolor: '#0062AD' ,'&:hover': { bgcolor: '#004a82' }}}
         >
           {isLoading ? <CircularProgress size={24} color="inherit" /> : "Create Account"}
         </Button>
          <div className="text-sm mt-2">
-            Already have account? <Link href='/auth/login' className="!text-[#004a82]">Log-in Here!</Link>
+            Already have account? <Link href='/auth/signin' className="!text-[#004a82]">Log-in Here!</Link>
           </div>
       </Box>
     </div>

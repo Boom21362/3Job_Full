@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { registerAction } from "@/libs/register";
+import { register } from "@/libs/register";
 import { Alert, CircularProgress } from "@mui/material";
 
 export default function RegisterPage() {
@@ -15,11 +15,10 @@ export default function RegisterPage() {
     setError("");
 
     const formData = new FormData(e.currentTarget);
-    const userData = Object.fromEntries(formData.entries());
 
     try {
       // 1. Call your lib function
-      await registerAction(userData as any); 
+      await register(formData); 
       
       // 2. If successful, go to login
       router.push("/auth/signin");
@@ -31,5 +30,4 @@ export default function RegisterPage() {
     }
   };
   
-  // ... rest of component
 }
