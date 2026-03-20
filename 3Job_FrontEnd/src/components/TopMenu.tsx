@@ -8,7 +8,7 @@ import Link from 'next/link';
 export default async function TopMenu(){
     
     const session = await getServerSession(authOptions)
-
+    
     return(
         <div className={styles.menucontainer}>
             <Image src={'/img/3joblogo.png'} className={styles.logoimg}

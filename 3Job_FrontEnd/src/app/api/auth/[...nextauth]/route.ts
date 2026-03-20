@@ -11,35 +11,26 @@ export const authOptions: AuthOptions = {
         email: { label: "Email", type: "email", placeholder: "email" },
         password: { label: "Password", type: "password" }
       },
+       
+
       async authorize(credentials) {
         if (!credentials) return null;
-
-        // 1. Call your library function
         const response = await userLogin(credentials.email, credentials.password);
-
-        // DEBUG: Check your VS Code Terminal to see the actual structure
-       console.log("DEBUG: Backend returned:", response)
-
-        // 2. Handle the "data" wrapper (Common in Vercel/Express backends)
-        if (response && response.data) {
-          const user = response.data;
-          return {
-            ...user,
-            id: user._id || user.id, // NextAuth MUST have 'id'
-          };
-        }
-
-        // 3. Handle direct response (If backend doesn't use a 'data' wrapper)
-        if (response && (response._id || response.id)) {
-          return {
-            ...response,
-            id: response._id || response.id,
-          };
-        }
-
-        // If we reach here, credentials were wrong or structure was invalid
-        return null; 
-      }
+      
+      if (response && response.success && response.token) {
+    // If backend doesn't send 'data', we use what we have
+    const userObj = response.data || { email: credentials.email }; 
+    
+    return {
+      id: userObj._id || userObj.id || "temp-id",
+      name: userObj.name || credentials.email.split('@')[0], // Fallback to email name
+      email: userObj.email || credentials.email,
+      role: userObj.role || "user",
+      accessToken: response.token
+    };
+  }
+  return null;
+}
     })
   ],
   pages: {
