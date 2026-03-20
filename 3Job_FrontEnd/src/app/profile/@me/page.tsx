@@ -2,6 +2,7 @@ import getUserProfile from "@/libs/getUserProfile";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -64,6 +65,14 @@ export default async function ProfilePage() {
           </tr>
         </tbody>
       </table>
+      {session.user.role === 'admin' && (
+                <Link href="/admin/dashboard" className="w-full pt-4">
+                    <button className="w-full bg-[#0062AD] hover:bg-[#004a82] text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 group">
+                        <span>Admin DashBoard</span>
+                        <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </button>
+                </Link>
+            )}
     </main>
   </div>
 );

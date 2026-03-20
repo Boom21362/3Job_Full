@@ -1,5 +1,5 @@
 'use client'
-import { signIn } from "next-auth/react"
+import { signIn,getSession } from "next-auth/react"
 import { Box, TextField, Button, Typography,CircularProgress } from "@mui/material";
 import Image from "next/image";
 import EyeBanner from "@/components/signInPage/EyeBanner";
@@ -23,11 +23,19 @@ export default function SignInPage() {
       callbackUrl: "/", 
     });
 
+    console.log("Client Side Result:", result);
+
   if (result?.error) {
       alert("Login failed! " + result.error);
       setIsLoading(false);
     } else {
-      router.push("/");
+      const session = await getSession();
+
+    if (session?.user?.role === "admin") {
+    router.push("/admin/dashboard");
+    } else {
+    router.push("/profile");
+    }
       router.refresh(); 
     }
   }

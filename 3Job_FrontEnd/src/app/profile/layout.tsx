@@ -2,19 +2,28 @@
 
 export default function ProfileLayout({
   children,
-  me, // This name MUST match your @folder name
+  me,
+  interviewsList,
 }: {
   children: React.ReactNode;
   me: React.ReactNode;
+  interviewsList: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col w-full">
-      {/* This renders what you see in the screenshot ("Your Profile") */}
+    <div className="flex flex-col items-left w-full min-h-screen bg-white pt-10">
+      
       {children} 
 
-      {/* This renders your @me/page.tsx (The table and user info) */}
-      <div className="mt-4">
-        {me}
+      <div className="flex flex-row items-start justify-center gap-6 mt-0 w-full max-w-5xl px-4">
+    
+        <div className="flex-none"> 
+          {me}
+        </div>
+
+        <div className="flex-none">
+          {interviewsList}
+        </div>
+
       </div>
     </div>
   );
