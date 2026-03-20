@@ -69,7 +69,7 @@ export default function RegisterPage() {
           variant="contained" 
           disabled={isLoading}
           fullWidth 
-          sx={{ mt: 3, py: 1.5, bgcolor: '#0062AD' }}
+          sx={{ mt: 3, py: 1.5, bgcolor: '#0062AD' ,'&:hover': { bgcolor: '#004a82' }}}
         >
           {isLoading ? <CircularProgress size={24} color="inherit" /> : "Create Account"}
         </Button>

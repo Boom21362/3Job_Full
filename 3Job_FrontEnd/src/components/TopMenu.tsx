@@ -14,16 +14,16 @@ export default async function TopMenu(){
             <Image src={'/img/3joblogo.png'} className={styles.logoimg}
             alt = 'logo'
             width={0} height={0} sizes='100vh'/>
-            <TopMenuItem title='Select Car' pageref='/car'/>
-            <TopMenuItem title='Reservations' pageref='/reservations'/>
-            <TopMenuItem title='About' pageref='/about'/>
+            <TopMenuItem title='Companies' pageref='/car'/>
+            <TopMenuItem title='Make Interviews' pageref='/reservations'/>
+            <TopMenuItem title='Your Profile' pageref='/profile'/>
             <div className='flex flex-row absolute right-0'>
                 <div className='flex items-center h-full px-2 py-3 text-cyan-600 text-sm'>
                 <TopMenuItem title='Cart' pageref='/cart'/>
                 <TopMenuItem title='Register' pageref='/auth/register'/>
                 </div>
             {
-                session? <Link href="/auth/signout">
+                session? <Link href="/api/auth/signout">
                     <div className='flex items-center h-full px-2 text-cyan-600 text-sm'>
                         Sign-Out of {session.user?.name}
                     </div>

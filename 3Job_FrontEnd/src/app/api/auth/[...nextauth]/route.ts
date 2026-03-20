@@ -34,22 +34,20 @@ export const authOptions: AuthOptions = {
     })
   ],
   pages: {
-    signIn: '/auth/signin',
-    // error: '/auth/signin', // Optional: redirects back to signin on error
+    signIn: '/',
+    error: '/auth/signin', // Optional: redirects back to signin on error
   },
   session: { 
     strategy: "jwt" 
   },
   callbacks: {
     async jwt({ token, user }) {
-      // If user is just logged in, attach their data to the token
       if (user) {
         return { ...token, ...user };
       }
       return token;
     },
     async session({ session, token }) {
-      // Pass all token data (id, role, etc.) into the session
       session.user = token as any;
       return session;
     }

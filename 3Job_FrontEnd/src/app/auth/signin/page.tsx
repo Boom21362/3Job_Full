@@ -1,23 +1,36 @@
 'use client'
 import { signIn } from "next-auth/react"
-import { Box, TextField, Button, Typography } from "@mui/material";
+import { Box, TextField, Button, Typography,CircularProgress } from "@mui/material";
 import Image from "next/image";
 import EyeBanner from "@/components/signInPage/EyeBanner";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SignInPage() {
+
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.currentTarget);
-    await signIn("credentials", {
+    const result = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
       redirect: false,
       callbackUrl: "/", 
     });
-  }
 
-    
+  if (result?.error) {
+      alert("Login failed! " + result.error);
+      setIsLoading(false);
+    } else {
+      router.push("/");
+      router.refresh(); 
+    }
+  }
 
   return (
     <div className="flex flex-row w-full min-h-screen items-center justify-center bg-gradient-to-br from-[#0062AD] via-[#004a82] to-[#002d54]">
@@ -48,12 +61,13 @@ export default function SignInPage() {
           <Button 
             type="submit" 
             variant="contained" 
+            disabled={isLoading}
             fullWidth 
             sx={{ mt: 3, bgcolor: '#0062AD', '&:hover': { bgcolor: '#004a82' } }}
           >
-            Login
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : "Login"}
           </Button>
-          <div className="text-sm mt-10">
+          <div className="text-sm mt-2">
             Don't have account? <Link href='/auth/register' className="!text-[#004a82]">Register Here!</Link>
           </div>
         </Box>
