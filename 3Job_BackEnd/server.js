@@ -41,10 +41,7 @@ app.use(express.json());
 //Cookie parser
 app.use(cookieParser());
 
-// 4. Data Sanitization (Only sanitize if the body exists and is valid)
-app.use(mongoSanitize());
-app.use(xss());
-app.use(hpp()); // Note: hpp() usually goes after body parsers
+
 
 //Query Parser
 //app.set('query parser','extended');

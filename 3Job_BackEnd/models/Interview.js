@@ -66,18 +66,4 @@ InterviewSchema.pre('save', async function () {
   }
 });
 
-InterviewSchema.virtual('live_match').get(function() {
-  // Check if both user and company exist AND have been populated (are objects)
-  if (!this.user || !this.company || typeof this.user !== 'object' || typeof this.company !== 'object') {
-    return [];
-  }
-
-  const userSpecs = this.user.specializations || [];
-  const companyStrengths = this.company.strengths || [];
-
-  return userSpecs.filter(spec => 
-    companyStrengths.includes(spec)
-  );
-});
-
 module.exports=mongoose.model('Interview',InterviewSchema);
