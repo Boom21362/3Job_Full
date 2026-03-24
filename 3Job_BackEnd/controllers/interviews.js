@@ -30,7 +30,7 @@ exports.getInterviews = async (req, res, next) => {
         const interviews = await query
         .populate({
             path: 'company',
-            select: 'name website tel specializations'
+            select: 'name website tel specializations compimgsrc compbannersrc'
         })
         .populate({
             path: 'user',
@@ -56,19 +56,21 @@ exports.getInterview = async (req, res, next) => {
         const interview = await Interview.findById(req.params.id)
         .populate({
             path: 'company',
-            select: 'name website tel specializations'
+            select: 'name website tel specializations compimgsrc compbannersrc'
         })
         .populate({
             path: 'user',
             select: 'name email specializations'
         });
 
+        
         if (!interview) {
             return res.status(404).json({ success: false, message: `No interview with id of ${req.params.id}` });
         }
 
         // Authorization check: User must own the interview or be an admin
-        if (interview.user.toString() !== req.user.id && req.user.role !== 'admin') {
+        const interviewOwnerId = interview.user._id ? interview.user._id.toString() : interview.user.toString();
+        if (interviewOwnerId !== req.user.id && req.user.role !== 'admin') {
             return res.status(401).json({ success: false, message: "Not authorized to access this interview" });
         }
 
@@ -85,7 +87,7 @@ exports.getInterview = async (req, res, next) => {
 exports.addInterview = async (req, res, next) => {
     try {
         req.body.company = req.params.companyId;
-        //req.body.user = req.user.id;
+        req.body.user = req.user.id;
         console.log(req.params.companyId);
         console.log(req.user.id);
 
@@ -119,7 +121,7 @@ exports.addInterview = async (req, res, next) => {
         }
 
         const intDate = new Date(req.body.intDate);
-        const startDate = new Date('2022-05-10T00:00:00Z');
+        const startDate = new Date('2022-05-9T23:59:59Z');
         const endDate = new Date('2022-05-13T23:59:59Z');
         if(intDate < startDate || intDate > endDate){
             return res.status(400).json({success:false,message:'Interview date must be between 10-05-2022 and 13-05-2022'});

@@ -62,24 +62,33 @@ exports.logout= async (req,res,next)=>{
     }
 };
 
-const sendTokenResponse=(user,statusCode,res)=>{
-    //Create Token
-    const token = user.getSignedJwtToken();
+// Get the token from model, create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
+  // Create token
+  const token = user.getSignedJwtToken();
 
-    const options ={
-        expires: new Date(
-            Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-        ),
-        httpOnly:true,
-        path:'/' //cookie will be at root (can access by everyone)
+  const options = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true,
+  };
+
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true;
+  }
+
+  // --- UPDATE THIS PART ---
+  res.status(statusCode).cookie('token', token, options).json({
+    success: true,
+    token,
+    data: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role
     }
-    if(process.env.NODE_ENV==='production'){
-        options.secure=true;
-    }
-    res.status(statusCode).cookie('token',token,options).json({
-        success:true,
-        token
-    })
+  });
 };
 
 exports.getMe=async(req,res,next)=>{
